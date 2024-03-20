@@ -1,18 +1,20 @@
 import {
-  createBrowserRouter,
-  createRoutesFromElements,
-  Route,
-  RouterProvider
+  BrowserRouter,
+  Routes,
+  Route
 } from "react-router-dom"
 import "bootstrap/dist/css/bootstrap.min.css"
 import { Note } from "./Note"
 
-const router = createBrowserRouter(
-  createRoutesFromElements(<Route path=":noteTitle" element={<Note />} />)
-)
-
 function App() {
-  return <RouterProvider router={router} />
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<div>Welcome to Protected Text</div>} />
+        <Route path="/:noteTitle" element={<Note />} />
+      </Routes>
+    </BrowserRouter>
+  )
 }
 
 export default App

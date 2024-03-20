@@ -7,11 +7,44 @@ export const Note = () => {
   const [showModal, setShowModal] = useState(true)
 
   const createNote = async (event) => {
-    // todo...
+    event.preventDefault()
+    try {
+      const response = await fetch("/note", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ title: "exampleTitle", text: note, password }),
+      })
+      if (response.ok) {
+        console.log("Note added successfully")
+      } else {
+        console.error("Failed to add note")
+      }
+    } catch (error) {
+      console.error("Error:", error)
+    }
   }
 
   const getNote = async (event) => {
-    // todo...
+    event.preventDefault()
+    try {
+      const response = await fetch(`/note/${password}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ password }),
+      })
+      if (response.ok) {
+        const data = await response.json()
+        console.log("Note retrieved successfully:", data)
+      } else {
+        console.error("Failed to retrieve note")
+      }
+    } catch (error) {
+      console.error("Error:", error)
+    }
   }
 
   return (
@@ -27,14 +60,14 @@ export const Note = () => {
                 <Modal.Title>Create new site?</Modal.Title>
               </Modal.Header>
               <Modal.Body>
-                <p>Great! This site doesn&apos;t exist, it can be yours!</p>
+                <p>Great! This site doesn&apost exist, it can be yours!</p>
                 <Form.Label htmlFor="password">New password</Form.Label>
                 <Form.Control
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   name="password"
-                  id="passowrd"
+                  id="password"
                 />
               </Modal.Body>
               <Modal.Footer>
@@ -42,6 +75,7 @@ export const Note = () => {
                   variant="primary"
                   size="sm"
                   onClick={() => setShowModal(false)}
+                  type="submit"
                 >
                   Create
                 </Button>
